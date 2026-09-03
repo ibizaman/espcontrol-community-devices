@@ -115,6 +115,10 @@ esphome:
               - delay: 500ms
               - lambda: |-
                   App.safe_reboot();
+    - priority: 250
+      then:
+        - lambda: |-
+            ESP_LOGW("reterminal_d1001", "!!! LOCAL DEBUG BUILD 20260903 !!!");
     - priority: -100
       then:
         - lambda: 'id(screen_rotation_ready) = true;'
@@ -313,6 +317,11 @@ binary_sensor:
       mode:
         input: true
         pulldown: true
+    on_press:
+      then:
+        - lambda: |-
+            ESP_LOGW("reterminal_d1001", "!!! GPIO3 BUTTON PRESSED !!!");
+        - light.toggle: display_backlight
 
 # ---------------------------------------------------------------------------
 # Touchscreen (GSL3670 capacitive, wakes screensaver on touch). Uses
@@ -341,6 +350,8 @@ touchscreen:
       mirror_x: true
       mirror_y: true
     on_touch:
+      - lambda: |-
+            ESP_LOGW("reterminal_d1001", "!!! LOCAL DEBUG BUILD 20260903 !!!");
       - script.execute: cover_art_pause_after_touch
       - script.wait: cover_art_pause_after_touch
       - script.execute: screensaver_wake
